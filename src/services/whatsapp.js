@@ -6,11 +6,10 @@ async function sendWhatsApp(toPhone, message) {
   const to = `whatsapp:+${phone.startsWith('91') ? phone : '91' + phone}`;
 
   try {
-    if ( process.env.TWILIO_SID) {
-      // const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-      const twilio = require('twilio')("AC72f5a099065afa047ccd3118caea8ff8", "c568d7f56e151ff2577364d12a6e98c3");
+    if (process.env.TWILIO_SID && process.env.TWILIO_TOKEN && process.env.TWILIO_WHATSAPP_FROM) {
+      const twilio = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
       const msg = await twilio.messages.create({
-        from: `whatsapp:+918329386658`,
+        from: process.env.TWILIO_WHATSAPP_FROM,
         to: to,
         body: message,
       });
